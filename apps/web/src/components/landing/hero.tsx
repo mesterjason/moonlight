@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       <div className="absolute inset-0 bg-gradient-to-b from-moonlight-500/5 via-transparent to-cosmic pointer-events-none" />
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-moonlight-500/10 rounded-full blur-[128px] animate-pulse" />
       <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-[96px] animate-pulse delay-1000" />
