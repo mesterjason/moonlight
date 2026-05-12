@@ -9,6 +9,13 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  transpilePackages: [
+    '@moonlight/shared',
+    '@moonlight/ai',
+    '@moonlight/video',
+    '@moonlight/subtitles',
+    '@moonlight/ui',
+  ],
 };
 
 export default nextConfig;
