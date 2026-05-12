@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid()) @db.Uuid
+  email     String   @unique
+  name      String?
+  credits   Int      @default(10)
+  isPremium Boolean  @default(false) @map("is_premium")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  videos    Video[]
+
+  @@map("users")
+}
+
+model Video {
+  id           String   @id @default(uuid()) @db.Uuid
+  userId       String   @map("user_id") @db.Uuid
+  filename     String
+  originalPath String   @map("original_path")
+  duration     Float    @default(0)
+  status       String   @default("uploading")
+  errorMessage String?  @map("error_message")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  clips        Clip[]
+  jobs         Job[]
+
+  @@map("videos")
+}
+
+model Clip {
+  id         String   @id @default(uuid()) @db.Uuid
+  videoId    String   @map("video_id") @db.Uuid
+  jobId      String?  @map("job_id") @db.Uuid
+  startTime  Float    @map("start_time")
+  endTime    Float    @map("end_time")
+  score      Float    @default(0)
+  transcript String?
+  keywords   String[]
+  outputPath String?  @map("output_path")
+  status     String   @default("pending")
+  createdAt  DateTime @default(now()) @map("created_at")
+  video      Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  @@map("clips")
+}
+
+model Job {
+  id        String   @id @default(uuid()) @db.Uuid
+  videoId   String   @map("video_id") @db.Uuid
+  config    Json     @default("{}")
+  status    String   @default("queued")
+  progress  Float    @default(0)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  video     Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  @@map("jobs")
+}

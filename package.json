@@ -1,0 +1,27 @@
+{
+  "name": "moonlight",
+  "private": true,
+  "description": "AI-Powered Viral Clip Generator",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,css,md}\"",
+    "clean": "turbo clean && rimraf node_modules",
+    "db:generate": "pnpm --filter web prisma generate",
+    "db:push": "pnpm --filter web prisma db push"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.0",
+    "prettier-plugin-tailwindcss": "^0.6.0",
+    "turbo": "^2.5.0",
+    "typescript": "^6.0.3"
+  },
+  "packageManager": "pnpm@10.28.1",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["@prisma/engines", "prisma", "esbuild", "sharp"]
+  }
+}
